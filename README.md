@@ -37,7 +37,7 @@ Other attempts made with breakoutboards using the MT3608 converter, didn't reall
 ## Implementation
 
 Only the conceptual implementation is explained here, the source files contain the details.
-![conceptual implementation](concept.png)
+![conceptual implementation](concept.svg)
 
 ## Calibration
 
