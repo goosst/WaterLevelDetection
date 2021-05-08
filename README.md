@@ -2,14 +2,14 @@
 
 ## Goal
 
-Measure the level of available water in my rainwater well.
+Measure the level of available water in a rainwater well.
 
 ## Wishlist
 
-- Report status through WiFi (mqtt-messages) to integrate in the rest of my home automation 
-- Since waterlevel only needs to be measured every x hours or days, be able to use a deepsleep method to safe power
-- Use standard available components (through hole components for electronics, simple sensors, ... )
-- Over the air updates
+- Report level of waater through WiFi (mqtt-messages), this will be further integrated in home automation 
+- Since waterlevel only needs to be measured every x hours or days, be able to use a deepsleep method to safe power / prevent heating of electric components
+- Use standard available components (through hole components for electronics, no SMD, ... )
+- Be able to update software over the air
 
 ## Concept and used components
 
@@ -34,12 +34,10 @@ Other attempts made with breakoutboards using the MT3608 converter, didn't reall
 | N-channel mosfet switchable by 3.3V digital signal: example FQP30N06L |
 | inductor, diode, capacitor |
 
-
 ## Implementation
 
-[conceptual implementation](concept.svg)
-
-
+Only the conceptual implementation is explained here, the source files contain the details.
+![conceptual implementation](concept.png)
 
 ## Calibration
 
