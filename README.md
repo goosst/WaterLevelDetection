@@ -39,7 +39,8 @@ Other attempts made with breakoutboards using MT3608's, didn't really produce a 
 ## Implementation
 
 Only the conceptual implementation is explained here, the source files contain the details.
-{{< figure src="concept.svg" title="PCB water level" height="200">}}
+![conceptual implementation](concept.svg | height=200)
+<!-- {{< figure src="concept.svg" title="PCB water level" height="200">}} -->
 
 
 ### Power electronics
@@ -77,15 +78,15 @@ Luckily this leads to a very linear trend :)
 ## Pictures
 
 PCB board used (here with additional options for prototyping)
-{{< figure src="pictures/PCB.jpg" title="PCB water level" width="150">}}
+< figure src="pictures/PCB.jpg" title="PCB water level" width="150">
 
 
 Looks of the sensor:
-{{< figure src="pictures/sensor.jpg " title="PCB water level" width="150">}}
+< figure src="pictures/sensor.jpg " title="PCB water level" width="150">
 
 
 Connections around the well are embedded in a two-component silicone gel:
-{{< figure src="pictures/potting.jpg " title="PCB water level" width="150">}}
+< figure src="pictures/potting.jpg " title="PCB water level" width="150">
 
 ## Home assistant integration
 
