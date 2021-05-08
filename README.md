@@ -78,7 +78,7 @@ Luckily this leads to a very linear trend :)
 ## Pictures
 
 PCB board used (here with additional options for prototyping)
-![](pictures/PCB.jpg")
+![](pictures/PCB.jpg)
 
 
 Looks of the sensor:
