@@ -2,21 +2,23 @@
 
 ## Goal
 
-Measure the level of available water in a rainwater well and report in my home automation tool (here home assitant).
+Measure the level of available water in a rainwater well and report in a home automation tool (here home assitant).
+
+Spoiler alert: a 4-20mA, 24V converter using an ESP8266 was created for this.
 
 ## Wishlist
 
 - Report level of water depth over WiFi (mqtt messages) 
-- Since waterlevel only needs to be measured every x hours or days, use a deepsleep method to safe power and prevent heating / wear of electric components
-- Use standard easily usable components (through hole components for electronics, no SMD, ... )
+- Since waterlevel only needs to be measured every x hours or days, use a deepsleep method to safe power and prevent heating / wear of components
+- Use common components (through hole components for electronics, no SMD, ... )
 - Be able to update software over the air
 
 ## Concept and used components
 
-The measuring principle is based on water pressure, the pressure at the bottom of the well is proportional with the height of the water. Other methods using distance sensors sound quite unreliable (reflections, need to have a wide cone of free air to measure to the bottom of the well, ... ).
+The measuring principle is based on water pressure, the pressure at the bottom of the well is proportional with the height of the water. Other methods using distance sensors sound quite unreliable (reflections, need to have a wide cone of free air to measure to the bottom of the well, ... ) or cumbersome (capacitive sensing).
 
 ### Controller
-To take care of the Wifi and mqtt messages, an ESP8266 is used ([Wemos D1 mini](https://www.banggood.com/Geekcreit-D1-mini-V2_2_0-WIFI-Internet-Development-Board-Based-ESP8266-4MB-FLASH-ESP-12S-Chip-p-1143874.html?cur_warehouse=CN&rmmds=search&p=ET150713234951201708&custlinkid=1551683)).
+To take care of the Wifi and mqtt messages, an ESP8266 ([Wemos D1 mini](https://www.banggood.com/Geekcreit-D1-mini-V2_2_0-WIFI-Internet-Development-Board-Based-ESP8266-4MB-FLASH-ESP-12S-Chip-p-1143874.html?cur_warehouse=CN&rmmds=search&p=ET150713234951201708&custlinkid=1551683)) is used.
 
 ### Pressure sensing and power electronics
 The sensor used here: [Pressure sensor](https://www.banggood.com/Submersible-Water-Level-Transmitter-Level-Transducer-Sensor-0-5mH2O-6m-Cable-p-1146896.html?rmmds=myorder&cur_warehouse=CN&p=ET150713234951201708&custlinkid=1551677).
@@ -51,6 +53,8 @@ Only the conceptual implementation is explained here, the source files contain t
 -- in the Wemos a feedback loop (PI controller) adjusts the duty ratio of the mosfet, this guarantees a constant voltage over temperature etc. and doesn't require a consistent input supply voltage.
 - Pin D8 of the WEMOS has to be used to generate the PWM signal for the dc-converter, when going to deepsleep this pin is inherently pulled down and the converter stops switching safely
 
+A prototype pcb was created for it (with an additional -in the end unused- current sensor), but the complexity is not very high to just solder it on a board ... .
+
 ### Current measurement
 Typical breakout boards using the INA219, come together with a 0.1 Ohm shunt resistor.
 Only 4-20 mA is produced by the sensor, this means the voltage measured over the shunt would only be 0.4-2 mV which is basically noise ... .
@@ -69,16 +73,17 @@ I've inserted the pressure sensor in water and came to this table:
 | 1   | 85 | 8.5 | 
 | 1.5   | 99 | 9.9 | 
 
-Luckily this leads to a very linear trend :)
+Luckily this leads to a linear trend :)
 
 
-![trend line](pictures/trendline.png | width=150)
+![trend line](pictures/trendline.png)
 
 
 ## Pictures
 
 PCB board used (here with additional options for prototyping)
 ![](pictures/PCB.jpg)
+{{< figure src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/PCB.jpg" title="PCB" width="100">}}
 
 
 Looks of the sensor:
@@ -101,7 +106,8 @@ a few mqtt topics were defined to read out and visualize the data:
     payload_not_available: "water level sensor offline"
 ```
 
-## Open issues
+## Possible next steps
 
 - clean up Kicad files and add here (too many items added for debugging purposes)
 -- remove incorrect R_pulldown1
+-- remove place for redundant component (MAX 417 and related jumpers)
