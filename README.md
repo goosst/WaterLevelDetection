@@ -41,7 +41,9 @@ Other attempts made with breakoutboards using MT3608's, didn't really produce a 
 ## Implementation
 
 Only the conceptual implementation is explained here, the source files contain the details.
-![conceptual implementation](concept.svg)
+<!-- ![conceptual implementation](concept.svg) -->
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/concept.svg" title="Concept 4-20mA" height="350">
+
 <!-- {{< figure src="concept.svg" title="PCB water level" height="200">}} -->
 
 
@@ -81,19 +83,19 @@ Luckily this leads to a linear trend :)
 
 ## Pictures
 
-PCB board used (here with additional options for prototyping)
+PCB board used (here with additional options for prototyping, the resistor of course gets replaced by the pressure sensor)
 <!-- ![](pictures/PCB.jpg) -->
-<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/PCB.jpg" title="PCB" width="250">
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/PCB.jpg" title="PCB" width="350">
 
 
-Looks of the sensor:
+Looks of the pressure sensor:
 <!-- ![](pictures/sensor.jpg) -->
-<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/sensor.jpg" title="pressure sensor" width="250">
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/sensor.jpg" title="pressure sensor" width="350">
 
 
 Connections around the well are embedded in a two-component silicone gel:
 <!-- ![](pictures/potting.jpg) -->
-<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/potting.jpg" title="pressure sensor" width="250">
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/potting.jpg" title="potting" width="350">
 
 ## Home assistant integration
 
@@ -108,8 +110,10 @@ a few mqtt topics were defined to read out and visualize the data:
     payload_not_available: "water level sensor offline"
 ```
 
-## Possible next steps
+## (Possible) next steps
 
-- clean up Kicad files and add here (too many items added for debugging purposes)
--- remove incorrect R_pulldown1
+- clean up Kicad files (they work but there are additional items added for debugging purposes)
+
+-- remove incorrect R_pulldown1 (or don't connect when using it)
 -- remove place for redundant component (MAX 417 and related jumpers)
+- create a proper 4-20mA, 24V converter using SMD components and compact converters
