@@ -49,7 +49,7 @@ Other attempts made with breakoutboards using MT3608's, didn't really produce a 
 
 Only the conceptual implementation is explained here, the source files contain the details.
 <!-- ![conceptual implementation](concept.svg) -->
-<img src="https://github.com/goosst/WaterLevelDetection/blob/main/concept.svg" title="Concept 4-20mA" height="350">
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/concept.svg" title="Concept 4-20mA" height="420">
 
 <!-- {{< figure src="concept.svg" title="PCB water level" height="200">}} -->
 
@@ -65,12 +65,11 @@ Only the conceptual implementation is explained here, the source files contain t
 ### Power electronics
 
 - To reliably create the supply voltage for the pressure sensor (~24V), a feedback mechanism is used:
-
--- the INA219 sends the actual measured voltage over I2C to the wemos
--- in the Wemos a feedback loop (PI controller) adjusts the duty ratio of the mosfet, this guarantees a constant voltage over temperature etc. and doesn't require a consistent input supply voltage.
+  - the INA219 sends the actual measured voltage over I2C to the wemos
+  - in the Wemos a feedback loop (PI controller) adjusts the duty ratio of the mosfet, this guarantees a constant voltage over temperature etc. and doesn't require a consistent input supply voltage.
 - Pin D8 of the WEMOS has to be used to generate the PWM signal for the dc-converter, when going to deepsleep this pin is inherently pulled down and the converter stops switching safely
 
-A prototype pcb was created for it (with an additional -in the end unused- current sensor), but the complexity is not very high to just solder it on a board ... .
+A prototype pcb was created for it (with an additional - in the end unused - MAX417 current sensor), but the complexity is not very high to just solder it on a board ... .
 
 ### Current measurement
 Typical breakout boards using the INA219, come with a 0.1 Ohm shunt resistor.
