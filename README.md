@@ -83,7 +83,7 @@ Luckily this leads to a linear trend :)
 
 PCB board used (here with additional options for prototyping)
 ![](pictures/PCB.jpg)
-< figure src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/PCB.jpg" title="PCB" width="100">
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/PCB.jpg" title="PCB" width="100">
 
 
 Looks of the sensor:
