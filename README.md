@@ -42,7 +42,7 @@ Other attempts made with breakoutboards using MT3608's, didn't really produce a 
 
 Only the conceptual implementation is explained here, the source files contain the details.
 <!-- ![conceptual implementation](concept.svg) -->
-<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/concept.svg" title="Concept 4-20mA" height="350">
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/concept.svg" title="Concept 4-20mA" height="350">
 
 <!-- {{< figure src="concept.svg" title="PCB water level" height="200">}} -->
 
@@ -58,7 +58,7 @@ Only the conceptual implementation is explained here, the source files contain t
 A prototype pcb was created for it (with an additional -in the end unused- current sensor), but the complexity is not very high to just solder it on a board ... .
 
 ### Current measurement
-Typical breakout boards using the INA219, come together with a 0.1 Ohm shunt resistor.
+Typical breakout boards using the INA219, come with a 0.1 Ohm shunt resistor.
 Only 4-20 mA is produced by the sensor, this means the voltage measured over the shunt would only be 0.4-2 mV which is basically noise ... .
 According the datasheet, the range of the INA219 can be configured from 40 to 320mV, hence a resistor in the range of 2 to 15 Ohm would be acceptable. Here, a resistor of 10 Ohm is used.
 
