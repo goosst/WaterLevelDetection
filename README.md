@@ -133,7 +133,6 @@ a few mqtt topics were defined to read out and visualize the data:
 ## (Possible) next steps
 
 - clean up Kicad files (they work but there are additional items added for debugging purposes)
-
--- remove incorrect R_pulldown1 (or don't connect when using it)
--- remove place for redundant component (MAX 417 and related jumpers)
+  - remove incorrect R_pulldown1 (or don't connect when using it)
+  - remove place for redundant component (MAX 417 and related jumpers)
 - create a proper 4-20mA, 24V converter using SMD components and compact converters
