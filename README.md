@@ -125,7 +125,7 @@ a few mqtt topics were defined to read out and visualize the data:
     payload_available: "Online"
     payload_not_available: "water level sensor offline"
 ```
-<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/homeassistant.png" title="water level home assistant" width="350">
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/homeassistant.png" title="water level home assistant" width="550">
 
 
 
