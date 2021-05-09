@@ -1,3 +1,5 @@
+# WaterLevelDetection
+
 - [WaterLevelDetection](#waterleveldetection)
   * [Goal](#goal)
   * [Wishlist](#wishlist)
@@ -13,8 +15,6 @@
   * [Home assistant integration](#home-assistant-integration)
   * [(Possible) next steps](#-possible--next-steps)
 
-
-# WaterLevelDetection
 
 ## Goal
 
