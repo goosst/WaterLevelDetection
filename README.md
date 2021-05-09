@@ -62,7 +62,8 @@ Typical breakout boards using the INA219, come with a 0.1 Ohm shunt resistor.
 Only 4-20 mA is produced by the sensor, this means the voltage measured over the shunt would only be 0.4-2 mV which is basically noise ... .
 According the datasheet, the range of the INA219 can be configured from 40 to 320mV, hence a resistor in the range of 2 to 15 Ohm would be acceptable. Here, a resistor of 10 Ohm is used.
 
-![resistor desoldering](pictures/INA219.png)
+<!-- ![resistor desoldering](pictures/INA219.png) -->
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/INA219.png" title="INA 219" width="150">
 
 ## Calibration
 
@@ -79,6 +80,7 @@ Luckily this leads to a linear trend :)
 
 
 ![trend line](pictures/trendline.png)
+
 
 
 ## Pictures
