@@ -1,3 +1,19 @@
+- [WaterLevelDetection](#waterleveldetection)
+  * [Goal](#goal)
+  * [Wishlist](#wishlist)
+  * [Concept and used components](#concept-and-used-components)
+    + [Controller](#controller)
+    + [Pressure sensing and power electronics](#pressure-sensing-and-power-electronics)
+    + [List of components](#list-of-components)
+  * [Implementation](#implementation)
+    + [Power electronics](#power-electronics)
+    + [Current measurement](#current-measurement)
+  * [Calibration](#calibration)
+  * [Pictures](#pictures)
+  * [Home assistant integration](#home-assistant-integration)
+  * [(Possible) next steps](#-possible--next-steps)
+
+
 # WaterLevelDetection
 
 ## Goal
