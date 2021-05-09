@@ -82,16 +82,18 @@ Luckily this leads to a linear trend :)
 ## Pictures
 
 PCB board used (here with additional options for prototyping)
-![](pictures/PCB.jpg)
-<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/PCB.jpg" title="PCB" width="100">
+<!-- ![](pictures/PCB.jpg) -->
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/PCB.jpg" title="PCB" width="250">
 
 
 Looks of the sensor:
-![](pictures/sensor.jpg)
+<!-- ![](pictures/sensor.jpg) -->
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/sensor.jpg" title="pressure sensor" width="250">
 
 
 Connections around the well are embedded in a two-component silicone gel:
-![](pictures/potting.jpg)
+<!-- ![](pictures/potting.jpg) -->
+<img src="https://github.com/goosst/WaterLevelDetection/blob/main/pictures/potting.jpg" title="pressure sensor" width="250">
 
 ## Home assistant integration
 
