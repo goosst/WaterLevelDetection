@@ -6,8 +6,8 @@
   * [Concept and used components](#concept-and-used-components)
     + [Controller](#controller)
     + [Pressure sensing and power electronics](#pressure-sensing-and-power-electronics)
-    + [List of components](#list-of-components)
   * [Implementation](#implementation)
+    + [List of components](#list-of-components)
     + [Power electronics](#power-electronics)
     + [Current measurement](#current-measurement)
   * [Calibration](#calibration)
@@ -45,15 +45,6 @@ This sensor creates an additional challenge, it returns a current between 4-20mA
 - I was not able to identify a boost DC-DC converter that was through-hole (not SMD) and had an enable/disable pin. So I've decided to create a small dc-converter myself. It's important to use an N-channel mosfet which can be switched by a 3.3V signal from the ESP8266. All the rest (diode, inductor, capacitor) are quite standard components which you can find cheaply.
 Other attempts made with breakoutboards using MT3608's, didn't really produce a stable output voltage when  component temperature got warmer etc.
 
-### List of components
-| Components used      | 
-| :------------- | 
-|  [Wemos D1 mini](https://www.banggood.com/Geekcreit-D1-mini-V2_2_0-WIFI-Internet-Development-Board-Based-ESP8266-4MB-FLASH-ESP-12S-Chip-p-1143874.html?cur_warehouse=CN&rmmds=search&p=ET150713234951201708&custlinkid=1551683)| 
-| [Pressure sensor](https://www.banggood.com/Submersible-Water-Level-Transmitter-Level-Transducer-Sensor-0-5mH2O-6m-Cable-p-1146896.html?rmmds=myorder&cur_warehouse=CN&p=ET150713234951201708&custlinkid=1551677) | 
-| INA219: [example](https://nl.aliexpress.com/item/4000330275495.html?spm=a2g0s.9042311.0.0.28c74c4d10PHbJ) |
-| N-channel mosfet switchable by 3.3V digital signal: example FQP30N06L |
-| inductor, diode, capacitor, terminal |
-
 ## Implementation
 
 Only the conceptual implementation is explained here, the source files contain the details.
@@ -62,6 +53,14 @@ Only the conceptual implementation is explained here, the source files contain t
 
 <!-- {{< figure src="concept.svg" title="PCB water level" height="200">}} -->
 
+### List of components
+| Components used      | 
+| :------------- | 
+|  [Wemos D1 mini](https://www.banggood.com/Geekcreit-D1-mini-V2_2_0-WIFI-Internet-Development-Board-Based-ESP8266-4MB-FLASH-ESP-12S-Chip-p-1143874.html?cur_warehouse=CN&rmmds=search&p=ET150713234951201708&custlinkid=1551683)| 
+| [Pressure sensor](https://www.banggood.com/Submersible-Water-Level-Transmitter-Level-Transducer-Sensor-0-5mH2O-6m-Cable-p-1146896.html?rmmds=myorder&cur_warehouse=CN&p=ET150713234951201708&custlinkid=1551677) | 
+| INA219: [example](https://nl.aliexpress.com/item/4000330275495.html?spm=a2g0s.9042311.0.0.28c74c4d10PHbJ) |
+| N-channel mosfet switchable by 3.3V digital signal: example FQP30N06L |
+| inductor, diode, capacitor, terminal |
 
 ### Power electronics
 
