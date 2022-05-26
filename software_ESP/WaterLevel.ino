@@ -19,7 +19,8 @@
 #define TASK_10000MS 1
 
 #define Deepsleep 1
-const int sleepSeconds = 200;
+unsigned int sleepSeconds = 3600; //seconds to stay in deepsleep (i.e. period wakups, max of ~71 minutes)
+const uint32_t deepsleepmicroseconds = sleepSeconds * 1000000;
 
 float voltage_setp_dcdc=20; //setpoint for voltage over output terminals
 
@@ -29,6 +30,7 @@ String mqtt_base_topic = "/sensor/" + mqtt_client_id + "/data";
 #define shunt_topic "/shuntvolt"
 #define voltage_topic "/voltage"
 #define dutyratio_topic "/dutr"
+#define waterdepth_topic "/waterdepth"
 #define airpressure_topic "/airpress"
 
 #define I2C_ADDRESS 0x40
@@ -273,9 +275,9 @@ void loop()
     delay(100);
   } while (!bmx280.hasValue());
 
-  Serial.print("Pressure: "); Serial.println(bmx280.getPressure());
-  Serial.print("Pressure (64 bit): "); Serial.println(bmx280.getPressure64());
-  Serial.print("Temperature: "); Serial.println(bmx280.getTemperature());
+//  Serial.print("Pressure: "); Serial.println(bmx280.getPressure());
+//  Serial.print("Pressure (64 bit): "); Serial.println(bmx280.getPressure64());
+//  Serial.print("Temperature: "); Serial.println(bmx280.getTemperature());
 
   //important: measurement data is read from the sensor in function hasValue() only. 
   //make sure to call get*() functions only after hasValue() has returned true. 
@@ -290,16 +292,21 @@ void loop()
     //    Serial.print("mqtt current shunt mA: ");
     //    Serial.println(SensorMeas.current_mA);
     //    Serial.println(String(SensorMeas.busVoltage_V,3).c_str());
+    
+        float waterdepth=0.030908096*SensorMeas.shuntVoltage_mV-1.5878; //convert shunt to waterdepth based on calibration of sensor
+
+    
     mqtt_client.publish((mqtt_base_topic + shunt_topic).c_str(), String(SensorMeas.shuntVoltage_mV, 2).c_str(), true);
     mqtt_client.publish((mqtt_base_topic + voltage_topic).c_str(), String(SensorMeas.busVoltage_V, 2).c_str(), true);
     mqtt_client.publish((mqtt_base_topic + dutyratio_topic).c_str(), String(PI_DC.output, 2).c_str(), true);
-mqtt_client.publish((mqtt_base_topic + airpressure_topic).c_str(), String(bmx280.getPressure64(), 2).c_str(), true);
+    mqtt_client.publish((mqtt_base_topic + airpressure_topic).c_str(), String(bmx280.getPressure64(), 2).c_str(), true);
+    mqtt_client.publish((mqtt_base_topic + waterdepth_topic).c_str(), String(waterdepth, 2).c_str(), true);
 
 
 #if Deepsleep
-    if (counterloops > 8)
+    if (counterloops > 6)
     {
-      ESP.deepSleep(sleepSeconds * 1000000);
+      ESP.deepSleep(deepsleepmicroseconds);
     }
     counterloops = counterloops + 1;
 #endif
