@@ -1,15 +1,17 @@
 // 6 dec 2020, basic open loop duty ratio
 //              structured using very basic task scheduling: https://github.com/sskata/Arduino-Task-Scheduling-Template/blob/master/TaskSchedulingTemplate_v1.0.ino
 // 2-3 may 2021: added functions for PI controller, OTA, mqtt, deepsleep
+// 26 may 2022: added BMP280 pressure sensor over i2c
 
 #include <Wire.h>
-#include <INA219_WE.h>
+#include <INA219_WE.h> //https://github.com/wollewald/INA219_WE
 #include <ESP8266WiFi.h>  //For ESP8266
 #include <PubSubClient.h> //For MQTT
 #include <ESP8266mDNS.h>  //For OTA
 #include <WiFiUdp.h>      //For OTA
 #include <ArduinoOTA.h>   //For OTA
 #include "configuration.h" // to store passwords of mqtt and wifi
+#include <BMx280I2C.h>
 
 //Set to 1 if tasks with respective period is used, otherwise set to 0 to save memory and CPU
 #define TASK_2MS 1
@@ -27,13 +29,16 @@ String mqtt_base_topic = "/sensor/" + mqtt_client_id + "/data";
 #define shunt_topic "/shuntvolt"
 #define voltage_topic "/voltage"
 #define dutyratio_topic "/dutr"
+#define airpressure_topic "/airpress"
 
 #define I2C_ADDRESS 0x40
 INA219_WE ina219(I2C_ADDRESS);
 
 const byte D_DCDC = 15; //pin D8 on wemos D1 generates PWM for dc-converter, pin8 makes it feasible to send out zero when going in deep sleep
 
-
+#define I2C_ADDRESS_BMP 0x76
+//create a BMx280I2C object using the I2C interface with I2C Address 0x76
+BMx280I2C bmx280(I2C_ADDRESS_BMP);
 
 //structure for PI controller
 struct PI_ctrl {
@@ -134,6 +139,33 @@ void setup()
 
     Serial.println("INA219 Current Sensor Example Sketch - Triggered Mode");
   }
+
+  //begin() checks the Interface, reads the sensor ID (to differentiate between BMP280 and BME280)
+  //and reads compensation parameters.
+  if (!bmx280.begin())
+  {
+    Serial.println("begin() failed. check your BMx280 Interface and I2C Address.");
+    while (1);
+  }
+
+  if (bmx280.isBME280())
+    Serial.println("sensor is a BME280");
+  else
+    Serial.println("sensor is a BMP280");
+
+  //reset sensor to default parameters.
+  bmx280.resetToDefaults();
+
+  //by default sensing is disabled and must be enabled by setting a non-zero
+  //oversampling setting.
+  //set an oversampling setting for pressure and temperature measurements. 
+  bmx280.writeOversamplingPressure(BMx280MI::OSRS_P_x16);
+  bmx280.writeOversamplingTemperature(BMx280MI::OSRS_T_x16);
+
+  //if sensor is a BME280, set an oversampling setting for humidity measurements.
+  if (bmx280.isBME280())
+    bmx280.writeOversamplingHumidity(BMx280MI::OSRS_H_x16);
+  
 }
 
 
@@ -218,16 +250,40 @@ void loop()
 
 #if TASK_10000MS
   static long unsigned int g = micros();
-  if (micros() >= (g + 10000000)) { //2000 ms tasks
+  if (micros() >= (g + 10000000)) { 
     g = micros();
-    /* Tasklist: 2000 ms */
+    /* Tasklist: 10000 ms */
 
+      //start a pressure measurement
+  if (!bmx280.measure())
+  {
+    Serial.println("could not start measurement, is a measurement already running?");
+    return;
+  }
 
     if (!mqtt_client.connected())
     {
       mqtt_reconnect();
     }
     mqtt_client.loop();
+
+      //wait for the pressure measurement to finish
+  do
+  {
+    delay(100);
+  } while (!bmx280.hasValue());
+
+  Serial.print("Pressure: "); Serial.println(bmx280.getPressure());
+  Serial.print("Pressure (64 bit): "); Serial.println(bmx280.getPressure64());
+  Serial.print("Temperature: "); Serial.println(bmx280.getTemperature());
+
+  //important: measurement data is read from the sensor in function hasValue() only. 
+  //make sure to call get*() functions only after hasValue() has returned true. 
+  if (bmx280.isBME280())
+  {
+    Serial.print("Humidity: "); 
+    Serial.println(bmx280.getHumidity());
+  }
 
     //    Serial.print("mqtt voltage V: ");
     //    Serial.println(SensorMeas.busVoltage_V);
@@ -237,6 +293,7 @@ void loop()
     mqtt_client.publish((mqtt_base_topic + shunt_topic).c_str(), String(SensorMeas.shuntVoltage_mV, 2).c_str(), true);
     mqtt_client.publish((mqtt_base_topic + voltage_topic).c_str(), String(SensorMeas.busVoltage_V, 2).c_str(), true);
     mqtt_client.publish((mqtt_base_topic + dutyratio_topic).c_str(), String(PI_DC.output, 2).c_str(), true);
+mqtt_client.publish((mqtt_base_topic + airpressure_topic).c_str(), String(bmx280.getPressure64(), 2).c_str(), true);
 
 
 #if Deepsleep
