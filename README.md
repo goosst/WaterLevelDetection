@@ -61,6 +61,7 @@ Only the conceptual implementation is explained here, the source files contain t
 | INA219: [example](https://nl.aliexpress.com/item/4000330275495.html?spm=a2g0s.9042311.0.0.28c74c4d10PHbJ) |
 | N-channel mosfet switchable by 3.3V digital signal: example FQP30N06L |
 | inductor, diode, capacitor, terminal |
+| BMP280: to measure air pressure |
 
 ### Power electronics
 
@@ -95,7 +96,10 @@ Luckily this leads to a linear trend :)
 
 ![trend line](pictures/trendline.png)
 
+### Update May 2022
 
+- Connected an additional cheap air pressure sensor BMP280 pressure sensor to the ESP (over i2c).
+- moved further calculation of waterheight to a little python script triggered by home assistant
 
 ## Pictures
 
@@ -132,7 +136,7 @@ a few mqtt topics were defined to read out and visualize the data:
 
 ## (Possible) next steps
 
-- clean up Kicad files (they work but there are additional items added for debugging purposes)
+- optimize Kicad files (they work but there are additional items added for debugging purposes)
   - remove incorrect R_pulldown1 (or don't connect when using it)
   - remove place for redundant component (MAX 417 and related jumpers)
 - create a proper 4-20mA, 24V converter using SMD components and compact converters
